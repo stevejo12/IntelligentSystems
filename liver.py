@@ -6,7 +6,7 @@ from sklearn.naive_bayes import GaussianNB
 
 dataset = pd.read_csv('ILPD.csv', header=None)
 
-train_data, test_data = train_test_split(dataset, test_size=0.2, random_state=42)
+train_data, test_data = train_test_split(dataset, test_size=0.95, random_state=150)
 
 train_data.columns = [
     "Age", "Gender", "TB",
