@@ -6,7 +6,11 @@ from sklearn.model_selection import train_test_split
 import keras
 from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropout
+from keras.preprocessing import image
 from sklearn.metrics import accuracy_score
+import cv2
+import tensorflow as tf
+from PIL import Image
 
 #reading files to train
 train = pd.read_csv('sign_mnist_train.csv')
@@ -23,6 +27,7 @@ print(np.unique(unique))
 #get the features for each row
 train.drop('label', axis=1, inplace=True)
 test.drop('label', axis=1, inplace=True)
+
 
 # getting the values of pixel 1-784 for each row
 # reshape the array to be 28x28 = 784 for each picture
@@ -47,7 +52,7 @@ x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
 # CNN Model
 batch_size = 128
 num_classes = 24
-epochs = 20
+epochs = 0
 
 model = Sequential()
 model.add(Conv2D(64, kernel_size=(3,3), activation = 'relu', input_shape=(28, 28 ,1) ))
@@ -74,10 +79,9 @@ history = model.fit(x_train, y_train,
 test_images = test.values
 test_images = np.array([np.reshape(i, (28, 28)) for i in test_images])
 test_images = np.array([i.flatten() for i in test_images])
-
 # example of one of the test image
-plt.imshow(test_images[0].reshape(28,28))
-plt.show()
+#plt.imshow(test_images[1].reshape(28,28))
+#plt.show()
 
 # transform test data
 label_binarizer = LabelBinarizer()
@@ -85,9 +89,29 @@ test_labels = label_binarizer.fit_transform(test_labels)
 
 test_images = test_images.reshape(test_images.shape[0], 28, 28, 1)
 
+
 # prediction based on test features or images pixel
+print('testimages',test_images)
 y_pred = model.predict(test_images)
 
 # accuracy of the test compared to the actual result.
 print("Predicted Accuracy: {} %".format((accuracy_score(test_labels, y_pred.round())* 100)))
+
+img = image.load_img('testing-image2.jpeg', target_size=(28,28), grayscale=True)
+img = image.img_to_array(img)
+img = cv2.resize(img, (28,28))
+img = img.astype("float")
+img = np.expand_dims(img, axis=0)
+print('initial img',img)
+
+img = np.array([i.flatten() for i in img])
+img = img.reshape(img.shape[0], 28,28,1)
+#print('imgtest',img)
+pred = model.predict(img)
+#plt.imshow(pred[0].reshape(28,28))
+#plt.show()
+
+
+
+
 
