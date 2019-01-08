@@ -24,7 +24,6 @@ print(np.unique(unique))
 train.drop('label', axis=1, inplace=True)
 test.drop('label', axis=1, inplace=True)
 
-
 # getting the values of pixel 1-784 for each row
 # reshape the array to be 28x28 = 784 for each picture
 # flattening the individual image into 1D array instead of 2D
