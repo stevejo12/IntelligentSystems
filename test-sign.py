@@ -4,13 +4,11 @@ from keras.preprocessing import image
 from keras.models import load_model
 import matplotlib.pyplot as plt
 
-
 model = "sign.model"
 model = load_model(model)
     
-img = cv2.imread('hand5.jpg',0)
+img = cv2.imread('HSign.jpg',0)
 img = cv2.resize(img,(28, 28))
-
 
 img = img.astype("float") / 255.0
 img = image.img_to_array(img)
@@ -22,8 +20,6 @@ plt.show()
 
 img = np.array([i.flatten() for i in img])
 img = img.reshape(img.shape[0],28,28,1)
-
-print(img.shape)
 
 predict = model.predict(img)
 result = np.argmax(predict)

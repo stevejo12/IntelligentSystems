@@ -10,8 +10,6 @@ from keras.preprocessing import image
 from sklearn.metrics import accuracy_score
 import cv2
 import tensorflow as tf
-from PIL import Image
-
 
 #reading files to train
 train = pd.read_csv('sign_mnist_train.csv')
@@ -27,7 +25,6 @@ unique = np.array(train_labels)
 #get the features for each row
 train.drop('label', axis=1, inplace=True)
 test.drop('label', axis=1, inplace=True)
-
 
 # getting the values of pixel 1-784 for each row
 # reshape the array to be 28x28 = 784 for each picture
