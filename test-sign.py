@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 model = "sign.model"
 model = load_model(model)
     
-img = cv2.imread('HSign.jpg',0)
+img = cv2.imread('LSign.jpg',0)
 img = cv2.resize(img,(28, 28))
 
 img = img.astype("float") / 255.0
